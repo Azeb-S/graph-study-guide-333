@@ -260,7 +260,7 @@ public class PracticeTest {
     graph.put(4, new LinkedHashSet<>());
 
     List<Integer> expected = Arrays.asList(1, 2, 3, 4);
-    assertEquals(expected, Practice.sortedReachableMap(graph, 1));
+    assertEquals(expected, Practice.sortedReachable(graph, 1));
   }
 
   @Test
@@ -272,7 +272,7 @@ public class PracticeTest {
     graph.put(3, new LinkedHashSet<>());
     graph.put(4, new LinkedHashSet<>());
 
-    List<Integer> result = Practice.sortedReachableMap(graph, 5);
+    List<Integer> result = Practice.sortedReachable(graph, 5);
     assertNotNull(result);
     assertTrue(result.isEmpty());
   }
@@ -285,7 +285,7 @@ public class PracticeTest {
     Map<Integer, Set<Integer>> graph = new HashMap<>();
     graph.put(10, new HashSet<>(List.of(10)));
     // Reachable from 10: {10}, sorted -> [10]
-    assertEquals(Collections.singletonList(10), Practice.sortedReachableMap(graph, 10));
+    assertEquals(Collections.singletonList(10), Practice.sortedReachable(graph, 10));
   }
 
   @Test
@@ -295,7 +295,7 @@ public class PracticeTest {
     graph.put(1, new HashSet<>(List.of(2)));
     graph.put(2, new HashSet<>(List.of(3)));
     graph.put(3, new HashSet<>(List.of(1)));
-    List<Integer> result = Practice.sortedReachableMap(graph, 1);
+    List<Integer> result = Practice.sortedReachable(graph, 1);
     // Reachable: {1,2,3}, sorted -> [1,2,3]
     assertEquals(Arrays.asList(1, 2, 3), result);
   }
@@ -308,7 +308,7 @@ public class PracticeTest {
     graph.put(2, new HashSet<>());
     graph.put(3, new HashSet<>(List.of(4)));
     graph.put(4, new HashSet<>());
-    assertEquals(Arrays.asList(1, 2), Practice.sortedReachableMap(graph, 1));
+    assertEquals(Arrays.asList(1, 2), Practice.sortedReachable(graph, 1));
   }
 
   // --- Tests for twoWay(Vertex<T> v1, Vertex<T> v2) ---
