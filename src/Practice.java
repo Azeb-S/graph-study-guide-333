@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -86,13 +86,29 @@ public class Practice {
     Set<Vertex<Integer>> visited = new HashSet<>();
     List<Integer> result = new ArrayList<>();
 
-    sortedReachable(starting, visited, result);
+    dfsVertex(starting, visited, result);
+
     Collections.sort(result);
 
     return result;
   }
 
-  public static void sortedReachable(Vertex<Integer> node, Set<Vertex<Integer>> visited, List<Integer> result) {
+  public static List<Integer> sortedReachableMap(Map<Integer, Set<Integer>> graph, int starting) {
+    List<Integer> result = new ArrayList<>();
+
+    if (graph == null || !graph.containsKey(starting)) {
+      return result;
+    }
+
+    Set<Integer> visited = new HashSet<>();
+
+    dfs(graph, starting, visited, result);
+
+    Collections.sort(result);
+    return result;
+  }
+
+  public static void dfsVertex(Vertex<Integer> node, Set<Vertex<Integer>> visited, List<Integer> result) {
     if (node == null || visited.contains(node)) {
       return;
     }
@@ -100,9 +116,21 @@ public class Practice {
     result.add(node.data);
 
     for (Vertex<Integer> neighbor : node.neighbors) {
-      sortedReachable(neighbor, visited, result);
+      dfsVertex(neighbor, visited, result);
     }
 
+  }
+
+  private static void dfs(Map<Integer, Set<Integer>> graph, Integer node, Set<Integer> visited, List<Integer> result) {
+    if (visited.contains(node)) {
+      return;
+    }
+    visited.add(node);
+    result.add(node);
+
+    for (Integer neighbor : graph.getOrDefault(node, new HashSet<>())) {
+      dfs(graph, neighbor, visited, result);
+    }
   }
 
   /**

@@ -6,31 +6,32 @@ public class PracticeTest {
 
   // --- Helper method to build the complex graph (Vertex-based) ---
   // The graph structure is:
-  //    v3  = 3
-  //    v7  = 7
-  //    v12 = 12
-  //    v34 = 34
-  //    v56 = 56
-  //    v78 = 78
-  //    v91 = 91
-  //    v45 = 45
-  //    v23 = 23
-  //    v67 = 67  (not connected from v3)
+  // v3 = 3
+  // v7 = 7
+  // v12 = 12
+  // v34 = 34
+  // v56 = 56
+  // v78 = 78
+  // v91 = 91
+  // v45 = 45
+  // v23 = 23
+  // v67 = 67 (not connected from v3)
   //
   // Neighbors are assigned as follows:
-  //    v3.neighbors  = [v7, v34]
-  //    v7.neighbors  = [v12, v45, v34, v56]
-  //    v12.neighbors = [v7, v56, v78]
-  //    v34.neighbors = [v34, v91]    // self-loop on v34
-  //    v56.neighbors = [v78]
-  //    v78.neighbors = [v91]
-  //    v91.neighbors = [v56]         // cycle between v91 and v56
-  //    v45.neighbors = [v23]
-  //    v23.neighbors = []
-  //    v67.neighbors = [v91]         // v67 is isolated from the rest (not reachable from v3)
+  // v3.neighbors = [v7, v34]
+  // v7.neighbors = [v12, v45, v34, v56]
+  // v12.neighbors = [v7, v56, v78]
+  // v34.neighbors = [v34, v91] // self-loop on v34
+  // v56.neighbors = [v78]
+  // v78.neighbors = [v91]
+  // v91.neighbors = [v56] // cycle between v91 and v56
+  // v45.neighbors = [v23]
+  // v23.neighbors = []
+  // v67.neighbors = [v91] // v67 is isolated from the rest (not reachable from
+  // v3)
   private Vertex<Integer>[] createComplexGraph() {
-    Vertex<Integer> v3  = new Vertex<>(3);
-    Vertex<Integer> v7  = new Vertex<>(7);
+    Vertex<Integer> v3 = new Vertex<>(3);
+    Vertex<Integer> v7 = new Vertex<>(7);
     Vertex<Integer> v12 = new Vertex<>(12);
     Vertex<Integer> v34 = new Vertex<>(34);
     Vertex<Integer> v56 = new Vertex<>(56);
@@ -40,8 +41,8 @@ public class PracticeTest {
     Vertex<Integer> v23 = new Vertex<>(23);
     Vertex<Integer> v67 = new Vertex<>(67);
 
-    v3.neighbors  = new ArrayList<>(List.of(v7, v34));
-    v7.neighbors  = new ArrayList<>(List.of(v12, v45, v34, v56));
+    v3.neighbors = new ArrayList<>(List.of(v7, v34));
+    v7.neighbors = new ArrayList<>(List.of(v12, v45, v34, v56));
     v12.neighbors = new ArrayList<>(List.of(v7, v56, v78));
     v34.neighbors = new ArrayList<>(List.of(v34, v91));
     v56.neighbors = new ArrayList<>(List.of(v78));
@@ -52,7 +53,7 @@ public class PracticeTest {
     v67.neighbors = new ArrayList<>(List.of(v91));
 
     // Return an array with v3 as the starting vertex
-    return new Vertex[]{v3, v7, v12, v34, v56, v78, v91, v45, v23, v67};
+    return new Vertex[] { v3, v7, v12, v34, v56, v78, v91, v45, v23, v67 };
   }
 
   // --- Tests for oddVertices(Vertex<Integer> starting) ---
@@ -66,20 +67,20 @@ public class PracticeTest {
   @Test
   public void testOddVertices_SimpleGraph() {
     // Create a simple graph:
-    //   5 --> 4
-    //   |     |
-    //   v     v
-    //   8 --> 7
-    //          \
-    //           v
-    //           9
+    // 5 --> 4
+    // | |
+    // v v
+    // 8 --> 7
+    // \
+    // v
+    // 9
     // Expected odd vertices from 5: 5, 7, and 9 => count = 3.
     Vertex<Integer> v5 = new Vertex<>(5);
     Vertex<Integer> v4 = new Vertex<>(4);
     Vertex<Integer> v8 = new Vertex<>(8);
     Vertex<Integer> v7 = new Vertex<>(7);
     Vertex<Integer> v9 = new Vertex<>(9);
-    
+
     v5.neighbors.add(v4);
     v5.neighbors.add(v8);
     v4.neighbors.add(v7);
@@ -93,15 +94,15 @@ public class PracticeTest {
   public void testOddVertices_ComplexGraph() {
     // Using the complex graph created above.
     // Reachable vertices from v3:
-    //   v3 (3, odd)
-    //   v7 (7, odd)
-    //   v12 (12, even)
-    //   v34 (34, even)
-    //   v45 (45, odd)
-    //   v56 (56, even)
-    //   v78 (78, even)
-    //   v91 (91, odd)
-    //   v23 (23, odd)
+    // v3 (3, odd)
+    // v7 (7, odd)
+    // v12 (12, even)
+    // v34 (34, even)
+    // v45 (45, odd)
+    // v56 (56, even)
+    // v78 (78, even)
+    // v91 (91, odd)
+    // v23 (23, odd)
     // (v67 is not reachable from v3)
     // Thus, the odd vertices are: 3, 7, 45, 91, and 23 (total count = 5).
     Vertex<Integer>[] vertices = createComplexGraph();
@@ -173,19 +174,19 @@ public class PracticeTest {
   @Test
   public void testSortedReachable_SimpleGraph() {
     // Graph structure:
-    //         5
-    //        / \
-    //      8a   8b
-    //       |
-    //       v
-    //       2
+    // 5
+    // / \
+    // 8a 8b
+    // |
+    // v
+    // 2
     // DFS should collect: 5, 8, 2, 8.
     // Sorted order: [2, 5, 8, 8]
     Vertex<Integer> v5 = new Vertex<>(5);
     Vertex<Integer> v8a = new Vertex<>(8);
     Vertex<Integer> v8b = new Vertex<>(8);
     Vertex<Integer> v2 = new Vertex<>(2);
-    
+
     v5.neighbors.add(v8a);
     v5.neighbors.add(v8b);
     v8a.neighbors.add(v2);
@@ -242,7 +243,8 @@ public class PracticeTest {
     assertEquals(Arrays.asList(1, 5), result);
   }
 
-  // --- Tests for sortedReachable(Map<Integer, Set<Integer>> graph, int starting) ---
+  // --- Tests for sortedReachable(Map<Integer, Set<Integer>> graph, int starting)
+  // ---
 
   @Test
   public void testSortedReachable_MapGraph_StartingPresent() {
@@ -256,9 +258,9 @@ public class PracticeTest {
     graph.put(2, new LinkedHashSet<>(Arrays.asList(4)));
     graph.put(3, new LinkedHashSet<>());
     graph.put(4, new LinkedHashSet<>());
-    
+
     List<Integer> expected = Arrays.asList(1, 2, 3, 4);
-    assertEquals(expected, Practice.sortedReachable(graph, 1));
+    assertEquals(expected, Practice.sortedReachableMap(graph, 1));
   }
 
   @Test
@@ -269,8 +271,8 @@ public class PracticeTest {
     graph.put(2, new LinkedHashSet<>(Arrays.asList(4)));
     graph.put(3, new LinkedHashSet<>());
     graph.put(4, new LinkedHashSet<>());
-    
-    List<Integer> result = Practice.sortedReachable(graph, 5);
+
+    List<Integer> result = Practice.sortedReachableMap(graph, 5);
     assertNotNull(result);
     assertTrue(result.isEmpty());
   }
@@ -283,7 +285,7 @@ public class PracticeTest {
     Map<Integer, Set<Integer>> graph = new HashMap<>();
     graph.put(10, new HashSet<>(List.of(10)));
     // Reachable from 10: {10}, sorted -> [10]
-    assertEquals(Collections.singletonList(10), Practice.sortedReachable(graph, 10));
+    assertEquals(Collections.singletonList(10), Practice.sortedReachableMap(graph, 10));
   }
 
   @Test
@@ -293,7 +295,7 @@ public class PracticeTest {
     graph.put(1, new HashSet<>(List.of(2)));
     graph.put(2, new HashSet<>(List.of(3)));
     graph.put(3, new HashSet<>(List.of(1)));
-    List<Integer> result = Practice.sortedReachable(graph, 1);
+    List<Integer> result = Practice.sortedReachableMap(graph, 1);
     // Reachable: {1,2,3}, sorted -> [1,2,3]
     assertEquals(Arrays.asList(1, 2, 3), result);
   }
@@ -306,7 +308,7 @@ public class PracticeTest {
     graph.put(2, new HashSet<>());
     graph.put(3, new HashSet<>(List.of(4)));
     graph.put(4, new HashSet<>());
-    assertEquals(Arrays.asList(1, 2), Practice.sortedReachable(graph, 1));
+    assertEquals(Arrays.asList(1, 2), Practice.sortedReachableMap(graph, 1));
   }
 
   // --- Tests for twoWay(Vertex<T> v1, Vertex<T> v2) ---
@@ -384,7 +386,8 @@ public class PracticeTest {
     assertFalse(Practice.twoWay(v1, v3));
   }
 
-  // --- Tests for positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) ---
+  // --- Tests for positivePathExists(Map<Integer, Set<Integer>> graph, int
+  // starting, int ending) ---
 
   /**
    * Test that a vertex is always reachable from itself if it is positive.
@@ -399,9 +402,9 @@ public class PracticeTest {
 
   /**
    * Test a small graph with a valid positive path:
-   *  3 -> {4}
-   *  4 -> {5}
-   *  5 -> {}
+   * 3 -> {4}
+   * 4 -> {5}
+   * 5 -> {}
    * Expected: There is a valid positive path from 3 to 5.
    */
   @Test
@@ -414,7 +417,8 @@ public class PracticeTest {
   }
 
   /**
-   * Test that if the ending vertex is missing from the graph, the result is false.
+   * Test that if the ending vertex is missing from the graph, the result is
+   * false.
    */
   @Test
   public void testMissingEndingVertex() {
@@ -429,9 +433,9 @@ public class PracticeTest {
   /**
    * Test a graph where the only available path includes a negative vertex.
    * Graph:
-   *   3 -> {-4}
-   *   -4 -> {5}
-   *   5 -> {}
+   * 3 -> {-4}
+   * -4 -> {5}
+   * 5 -> {}
    * Even though there is a path from 3 to 5, it includes -4 (non-positive),
    * so the method should return false.
    */
@@ -447,10 +451,10 @@ public class PracticeTest {
   /**
    * Test a graph with a cycle where all vertices are positive.
    * Graph:
-   *   1 -> {2}
-   *   2 -> {3}
-   *   3 -> {1, 4}
-   *   4 -> {}
+   * 1 -> {2}
+   * 2 -> {3}
+   * 3 -> {1, 4}
+   * 4 -> {}
    * There is a valid cycle and a positive path from 1 to 4.
    */
   @Test
@@ -466,11 +470,12 @@ public class PracticeTest {
   /**
    * Test a graph with a cycle that forces the use of a negative vertex.
    * Graph:
-   *   1 -> {-2}
-   *   -2 -> {3}
-   *   3 -> {1, 4}
-   *   4 -> {}
-   * The only available path from 1 to 4 includes -2, so the result should be false.
+   * 1 -> {-2}
+   * -2 -> {3}
+   * 3 -> {1, 4}
+   * 4 -> {}
+   * The only available path from 1 to 4 includes -2, so the result should be
+   * false.
    */
   @Test
   public void testCycleInvalidDueToNegative() {
@@ -483,13 +488,14 @@ public class PracticeTest {
   }
 
   /**
-   * Test a graph with multiple paths from the starting vertex to the ending vertex.
+   * Test a graph with multiple paths from the starting vertex to the ending
+   * vertex.
    * One path is valid while another includes a negative vertex.
    * Graph:
-   *   3 -> {4, -2}
-   *   4 -> {9}
-   *   -2 -> {9}
-   *   9 -> {}
+   * 3 -> {4, -2}
+   * 4 -> {9}
+   * -2 -> {9}
+   * 9 -> {}
    * Although the path 3->(-2)->9 is invalid, 3->4->9 is valid.
    */
   @Test
@@ -505,9 +511,9 @@ public class PracticeTest {
   /**
    * Test that if the starting vertex is not positive, the method returns false.
    * Graph:
-   *   -3 -> {4}
-   *   4 -> {5}
-   *   5 -> {}
+   * -3 -> {4}
+   * 4 -> {5}
+   * 5 -> {}
    */
   @Test
   public void testStartingNotPositive() {
@@ -521,9 +527,9 @@ public class PracticeTest {
   /**
    * Test that if the ending vertex is not positive, the method returns false.
    * Graph:
-   *   3 -> {4}
-   *   4 -> {-5}
-   *   -5 -> {}
+   * 3 -> {4}
+   * 4 -> {-5}
+   * -5 -> {}
    */
   @Test
   public void testEndingNotPositive() {
@@ -535,10 +541,11 @@ public class PracticeTest {
   }
 
   /**
-   * Test a disconnected graph where the starting and ending vertices belong to different components.
+   * Test a disconnected graph where the starting and ending vertices belong to
+   * different components.
    * Graph:
-   *   Component 1: 1 -> {2}, 2 -> {}
-   *   Component 2: 3 -> {4}, 4 -> {}
+   * Component 1: 1 -> {2}, 2 -> {}
+   * Component 2: 3 -> {4}, 4 -> {}
    * There is no path from 1 to 4.
    */
   @Test
@@ -554,15 +561,15 @@ public class PracticeTest {
   /**
    * Test a complex graph with cycles and multiple valid paths.
    * Graph structure:
-   *   10 -> {20, 30, 40}
-   *   20 -> {50, 60}
-   *   30 -> {20, 70}
-   *   40 -> {80}
-   *   50 -> {90}
-   *   60 -> {30, 90}  // cycle: 30 -> 20 -> 60 -> 30
-   *   70 -> {}
-   *   80 -> {90}
-   *   90 -> {}
+   * 10 -> {20, 30, 40}
+   * 20 -> {50, 60}
+   * 30 -> {20, 70}
+   * 40 -> {80}
+   * 50 -> {90}
+   * 60 -> {30, 90} // cycle: 30 -> 20 -> 60 -> 30
+   * 70 -> {}
+   * 80 -> {90}
+   * 90 -> {}
    * A valid positive path exists from 10 to 90 (e.g., 10 -> 20 -> 50 -> 90).
    */
   @Test
@@ -581,14 +588,15 @@ public class PracticeTest {
   }
 
   /**
-   * Test a complex graph where every path from the starting vertex to the ending vertex includes a negative vertex.
+   * Test a complex graph where every path from the starting vertex to the ending
+   * vertex includes a negative vertex.
    * Modified graph structure:
-   *   10 -> {20, 30}
-   *   20 -> {-50}     // now, 20 only leads to -50
-   *   30 -> {20, 70}
-   *   -50 -> {90}
-   *   70 -> {}
-   *   90 -> {}
+   * 10 -> {20, 30}
+   * 20 -> {-50} // now, 20 only leads to -50
+   * 30 -> {20, 70}
+   * -50 -> {90}
+   * 70 -> {}
+   * 90 -> {}
    * Every path from 10 to 90 must pass through 20 then -50.
    */
   @Test
@@ -603,7 +611,8 @@ public class PracticeTest {
     assertFalse(Practice.positivePathExists(graph, 10, 90));
   }
 
-  // --- Tests for hasExtendedConnectionAtCompany(Professional person, String companyName) ---
+  // --- Tests for hasExtendedConnectionAtCompany(Professional person, String
+  // companyName) ---
 
   /**
    * Test that if the professional is null, the method returns false.
@@ -626,7 +635,8 @@ public class PracticeTest {
 
   /**
    * Test a direct connection:
-   * Alice works at "Global Inc.", and her direct connection Bob works at "Innovative LLC".
+   * Alice works at "Global Inc.", and her direct connection Bob works at
+   * "Innovative LLC".
    */
   @Test
   public void testDirectConnection() {
@@ -648,11 +658,11 @@ public class PracticeTest {
     Set<Professional> charlieConnections = new HashSet<>();
     charlieConnections.add(bob);
     Professional charlie = new Professional("Charlie", "Other Corp", 7, charlieConnections);
-    
+
     Set<Professional> aliceConnections = new HashSet<>();
     aliceConnections.add(charlie);
     Professional alice = new Professional("Alice", "Global Inc.", 5, aliceConnections);
-    
+
     assertTrue(Practice.hasExtendedConnectionAtCompany(alice, "Tech Solutions"));
   }
 
@@ -665,17 +675,18 @@ public class PracticeTest {
     Professional a = new Professional("A", "Other Corp", 3, new HashSet<>());
     Professional b = new Professional("B", "FutureTech", 4, new HashSet<>());
     Professional c = new Professional("C", "Other Corp", 5, new HashSet<>());
-    
+
     // Build cycle: A -> B -> C -> A
     a.getConnections().add(b);
     b.getConnections().add(c);
     c.getConnections().add(a);
-    
+
     assertTrue(Practice.hasExtendedConnectionAtCompany(a, "FutureTech"));
   }
 
   /**
-   * Test a network where no one in the extended network works for the target company.
+   * Test a network where no one in the extended network works for the target
+   * company.
    * In this case, none work for "Nonexistent Corp".
    */
   @Test
@@ -683,19 +694,19 @@ public class PracticeTest {
     Professional a = new Professional("A", "Other Corp", 3, new HashSet<>());
     Professional b = new Professional("B", "Global Inc.", 4, new HashSet<>());
     Professional c = new Professional("C", "Tech Solutions", 5, new HashSet<>());
-    
+
     a.getConnections().add(b);
     b.getConnections().add(c);
-    
+
     assertFalse(Practice.hasExtendedConnectionAtCompany(a, "Nonexistent Corp"));
   }
 
   /**
    * Test a network with multiple branches.
    * Create a network:
-   *   A -> {B, C}
-   *   B -> {D, E}  where D works at "Global Inc." and E works at "Other Corp".
-   *   C -> {F}     where F does not work for the target.
+   * A -> {B, C}
+   * B -> {D, E} where D works at "Global Inc." and E works at "Other Corp".
+   * C -> {F} where F does not work for the target.
    * Target is "Global Inc.".
    */
   @Test
@@ -705,10 +716,10 @@ public class PracticeTest {
     Professional b = new Professional("B", "Other Corp", 5, new HashSet<>(Arrays.asList(d, e)));
     Professional f = new Professional("F", "Other Corp", 4, new HashSet<>());
     Professional c = new Professional("C", "Other Corp", 3, new HashSet<>(Arrays.asList(f)));
-    
+
     Set<Professional> aConnections = new HashSet<>(Arrays.asList(b, c));
     Professional a = new Professional("A", "Other Corp", 7, aConnections);
-    
+
     assertTrue(Practice.hasExtendedConnectionAtCompany(a, "Global Inc."));
   }
 
@@ -723,22 +734,22 @@ public class PracticeTest {
     Professional c = new Professional("C", "Other Corp", 6, new HashSet<>(Arrays.asList(d)));
     Professional b = new Professional("B", "Other Corp", 3, new HashSet<>(Arrays.asList(c)));
     Professional a = new Professional("A", "Other Corp", 2, new HashSet<>(Arrays.asList(b)));
-    
+
     assertFalse(Practice.hasExtendedConnectionAtCompany(a, "UltraCorp"));
   }
 
   /**
    * Test a complex network with multiple cycles and branches.
    * Network structure:
-   *   A works at "Other Corp".
-   *   A -> {B, C}
-   *   B -> {D, E}
-   *   C -> {F, G}
-   *   D -> {A} (cycle)
-   *   E -> {} and E works at "Innovative LLC"
-   *   F -> {F} (self-loop)
-   *   G -> {H}
-   *   H -> {B} (cycle connecting back to B)
+   * A works at "Other Corp".
+   * A -> {B, C}
+   * B -> {D, E}
+   * C -> {F, G}
+   * D -> {A} (cycle)
+   * E -> {} and E works at "Innovative LLC"
+   * F -> {F} (self-loop)
+   * G -> {H}
+   * H -> {B} (cycle connecting back to B)
    * The target is "Innovative LLC".
    */
   @Test
@@ -755,18 +766,18 @@ public class PracticeTest {
     // Build connections manually:
     a.getConnections().add(b);
     a.getConnections().add(c);
-    
+
     b.getConnections().add(d);
     b.getConnections().add(e);
-    
+
     c.getConnections().add(f);
     c.getConnections().add(g);
-    
+
     d.getConnections().add(a); // cycle: D -> A
     g.getConnections().add(h);
     h.getConnections().add(b); // cycle: H -> B
     f.getConnections().add(f); // self-loop on F
-    
+
     assertTrue(Practice.hasExtendedConnectionAtCompany(a, "Innovative LLC"));
   }
 
@@ -782,16 +793,16 @@ public class PracticeTest {
   @Test
   public void testNextMoves_exampleFromJavadoc() {
     char[][] board = {
-      {' ', ' ', 'X'},
-      {'X', ' ', ' '},
-      {' ', ' ', ' '}
+        { ' ', ' ', 'X' },
+        { 'X', ' ', ' ' },
+        { ' ', ' ', ' ' }
     };
-    int[] current = {1, 2};
+    int[] current = { 1, 2 };
     int[][] directions = {
-      {0, 1},
-      {-1, 0},
-      {1, 0},
-      {1, -1}
+        { 0, 1 },
+        { -1, 0 },
+        { 1, 0 },
+        { 1, -1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -804,14 +815,14 @@ public class PracticeTest {
   @Test
   public void testNextMoves_oneByOneBoard() {
     char[][] board = {
-      {' '}
+        { ' ' }
     };
-    int[] current = {0, 0};
+    int[] current = { 0, 0 };
     int[][] directions = {
-      {0, 1},
-      {1, 0},
-      {-1, 0},
-      {0, -1}
+        { 0, 1 },
+        { 1, 0 },
+        { -1, 0 },
+        { 0, -1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -824,17 +835,17 @@ public class PracticeTest {
   @Test
   public void testNextMoves_moreRowsThanCols_bottomRight() {
     char[][] board = {
-      {' ', ' '},
-      {' ', ' '},
-      {' ', ' '},
-      {' ', ' '}
+        { ' ', ' ' },
+        { ' ', ' ' },
+        { ' ', ' ' },
+        { ' ', ' ' }
     };
-    int[] current = {3, 1};
+    int[] current = { 3, 1 };
     int[][] directions = {
-      {0, 1},
-      {1, 0},
-      {-1, 0},
-      {0, -1}
+        { 0, 1 },
+        { 1, 0 },
+        { -1, 0 },
+        { 0, -1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -847,15 +858,15 @@ public class PracticeTest {
   @Test
   public void testNextMoves_moreColsThanRows_bottomRight() {
     char[][] board = {
-      {' ', ' ', ' ', ' '},
-      {' ', ' ', ' ', ' '}
+        { ' ', ' ', ' ', ' ' },
+        { ' ', ' ', ' ', ' ' }
     };
-    int[] current = {1, 3};
+    int[] current = { 1, 3 };
     int[][] directions = {
-      {0, 1},
-      {1, 0},
-      {-1, 0},
-      {0, -1}
+        { 0, 1 },
+        { 1, 0 },
+        { -1, 0 },
+        { 0, -1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -868,15 +879,15 @@ public class PracticeTest {
   @Test
   public void testNextMoves_surroundedByXs() {
     char[][] board = {
-      {'X', 'X', 'X'},
-      {'X', ' ', 'X'},
-      {'X', 'X', 'X'}
+        { 'X', 'X', 'X' },
+        { 'X', ' ', 'X' },
+        { 'X', 'X', 'X' }
     };
-    int[] current = {1, 1};
+    int[] current = { 1, 1 };
     int[][] directions = {
-      {-1, -1}, {-1, 0}, {-1, 1},
-      {0, -1},           {0, 1},
-      {1, -1},  {1, 0},  {1, 1}
+        { -1, -1 }, { -1, 0 }, { -1, 1 },
+        { 0, -1 }, { 0, 1 },
+        { 1, -1 }, { 1, 0 }, { 1, 1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -889,24 +900,23 @@ public class PracticeTest {
   @Test
   public void testNextMoves_allDirectionsAvailable() {
     char[][] board = {
-      {' ', ' ', ' '},
-      {' ', ' ', ' '},
-      {' ', ' ', ' '}
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' }
     };
-    int[] current = {1, 1};
+    int[] current = { 1, 1 };
     int[][] directions = {
-      {-1, -1}, {-1, 0}, {-1, 1},
-      {0, -1},           {0, 1},
-      {1, -1},  {1, 0},  {1, 1}
+        { -1, -1 }, { -1, 0 }, { -1, 1 },
+        { 0, -1 }, { 0, 1 },
+        { 1, -1 }, { 1, 0 }, { 1, 1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
     Set<String> actual = toSet(result);
     Set<String> expected = new HashSet<>(Arrays.asList(
-      "0,0", "0,1", "0,2",
-      "1,0",       "1,2",
-      "2,0", "2,1", "2,2"
-    ));
+        "0,0", "0,1", "0,2",
+        "1,0", "1,2",
+        "2,0", "2,1", "2,2"));
 
     assertEquals(expected, actual);
   }
@@ -914,15 +924,15 @@ public class PracticeTest {
   @Test
   public void testNextMoves_topLeftCorner() {
     char[][] board = {
-      {' ', ' ', ' '},
-      {' ', ' ', ' '},
-      {' ', ' ', ' '}
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' }
     };
-    int[] current = {0, 0};
+    int[] current = { 0, 0 };
     int[][] directions = {
-      {0, 1},
-      {1, 0},
-      {1, 1}
+        { 0, 1 },
+        { 1, 0 },
+        { 1, 1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -935,13 +945,13 @@ public class PracticeTest {
   @Test
   public void testNextMoves_singleDirection() {
     char[][] board = {
-      {' ', ' ', ' '},
-      {' ', ' ', ' '},
-      {' ', ' ', ' '}
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' },
+        { ' ', ' ', ' ' }
     };
-    int[] current = {1, 1};
+    int[] current = { 1, 1 };
     int[][] directions = {
-      {-1, -1}
+        { -1, -1 }
     };
 
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -956,10 +966,10 @@ public class PracticeTest {
   @Test
   public void testNextMoves_NoDirections() {
     char[][] board = {
-      {' ', ' '},
-      {' ', ' '}
+        { ' ', ' ' },
+        { ' ', ' ' }
     };
-    int[] current = {0, 0};
+    int[] current = { 0, 0 };
     int[][] directions = {};
     // No directions means no moves.
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -969,13 +979,13 @@ public class PracticeTest {
   @Test
   public void testNextMoves_AllBlockedByX() {
     char[][] board = {
-      {'X', 'X', 'X'},
-      {'X', ' ', 'X'},
-      {'X', 'X', 'X'}
+        { 'X', 'X', 'X' },
+        { 'X', ' ', 'X' },
+        { 'X', 'X', 'X' }
     };
-    int[] current = {1, 1};
+    int[] current = { 1, 1 };
     int[][] directions = {
-      {-1, 0}, {1, 0}, {0, -1}, {0, 1}
+        { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }
     };
     // All four adjacent cells are 'X'.
     List<int[]> result = Practice.nextMoves(board, current, directions);
@@ -985,12 +995,12 @@ public class PracticeTest {
   @Test
   public void testNextMoves_DiagonalOnly() {
     char[][] board = {
-      {' ', 'X'},
-      {'X', ' '}
+        { ' ', 'X' },
+        { 'X', ' ' }
     };
-    int[] current = {0, 0};
+    int[] current = { 0, 0 };
     int[][] directions = {
-      {1, 1}  // only the diagonal down-right is allowed
+        { 1, 1 } // only the diagonal down-right is allowed
     };
     // That diagonal is open.
     List<int[]> result = Practice.nextMoves(board, current, directions);
