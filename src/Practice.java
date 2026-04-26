@@ -251,6 +251,35 @@ public class Practice {
    *         company, false otherwise
    */
   public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
+    if (person == null) {
+      return false;
+    }
+
+    Set<Professional> visited = new HashSet<>();
+    return hasCompanyDfs(person, companyName, visited);
+
+  }
+
+  // helper method
+
+  private static boolean hasCompanyDfs(Professional person, String companyName, Set<Professional> visited) {
+
+    if (person.getCompany().equals(companyName)) {
+      return true;
+    }
+    if (visited.contains(person)) {
+      return false;
+    }
+    visited.add(person);
+
+    for (Professional neighbor : person.getConnections()) {
+      if (hasCompanyDfs(neighbor, companyName, visited)) {
+
+        return true;
+
+      }
+    }
+
     return false;
   }
 
