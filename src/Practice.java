@@ -211,7 +211,31 @@ public class Practice {
    * @return whether there exists a valid positive path from starting to ending
    */
   public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) {
+    if (graph == null || starting <= 0 || ending <= 0 || !graph.containsKey(starting) || !graph.containsKey(ending)) {
+      return false;
+    }
+    Set<Integer> visited = new HashSet<>();
+
+    return postiveDFS(graph, starting, ending, visited);
+  }
+
+  public static boolean postiveDFS(Map<Integer, Set<Integer>> graph, int node, int ending, Set<Integer> visted) {
+
+    if (node == ending) {
+      return true;
+    }
+    if (node <= 0 || visted.contains(node)) {
+      return false;
+    }
+    visted.add(node);
+
+    for (Integer neighbor : graph.getOrDefault(node, new HashSet<>())) {
+      if (postiveDFS(graph, neighbor, ending, visted)) {
+        return true;
+      }
+    }
     return false;
+
   }
 
   /**
