@@ -163,7 +163,35 @@ public class Practice {
    *         otherwise
    */
   public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) {
+
+    if (v1 == null || v2 == null) {
+      return false;
+    }
+    if (v1 == v2) {
+      return true;
+    }
+    return canReach(v1, v2, new HashSet<>()) && canReach(v2, v1, new HashSet<>());
+
+  }
+
+  public static <T> boolean canReach(Vertex<T> start, Vertex<T> target, Set<Vertex<T>> visited) {
+    if (start == target) {
+      return true;
+    }
+    if (visited.contains(start)) {
+      return false;
+    }
+    visited.add(start);
+
+    for (Vertex<T> neighbor : start.neighbors) {
+
+      if (canReach(neighbor, target, visited)) {
+        return true;
+      }
+
+    }
     return false;
+
   }
 
   /**
